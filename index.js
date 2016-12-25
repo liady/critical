@@ -46,6 +46,7 @@ function preprocess(url, callback) {
 }
 
 function processCss(url, cssfilepath) {
+    
     penthouse.DEBUG = true;
 
     return penthouse({
