@@ -1,0 +1,18 @@
+{
+  "name": "critical-css",
+  "version": "1.0.0",
+  "description": "Extract critical CSS",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "cd penthouse && npm install --production",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "private": "true",
+  "dependencies": {
+    "cheerio": "^0.22.0",
+    "node-fetch": "^1.6.3"
+  }
+}
