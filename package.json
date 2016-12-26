@@ -4,8 +4,7 @@
   "description": "Extract critical CSS",
   "main": "index.js",
   "scripts": {
-    "start": "npm install --production && node index.js",
-    "minify": "node index.js",
+    "critical": "node index.js",
     "lint": "jshint .",
     "test": "npm run lint && mocha --compilers js:babel-core/register test/core-tests.js",
     "test-all": "npm run lint && mocha --compilers js:babel-core/register"

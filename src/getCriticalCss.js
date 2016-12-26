@@ -3,9 +3,7 @@ var path = require('path');
 var fs = require('fs');
 var fetch = require('node-fetch')
 var cheerio = require('cheerio')
-var osTmpdir = require('os-tmpdir')
-var TMP_DIR = osTmpdir()
-var tmp = require('tmp')
+var urlResolver = require('url')
 var CssMinifier = require('clean-css');
 
 function getText(url) {
@@ -24,7 +22,7 @@ function readCssSources(url, callback) {
             var $el = $(this);
             if($el.attr('href')) {
                 var res = $el.attr('href');
-                var linkHref = res[1]==='/' ? 'http:' + res : parsedUrl + res;
+                var linkHref = urlResolver.resolve(url, res);
                 if(!hrefs[linkHref]) {
                     console.log('Found Link: ' + linkHref)
                     hrefs[linkHref] = true;
@@ -37,23 +35,20 @@ function readCssSources(url, callback) {
         });
 
         return Promise.all(cssStringPromises).then(function(cssStrings) {
-            var css = cssStrings.join('');
-            var tmpobj = tmp.fileSync({dir: TMP_DIR})
-            console.log('Writing to a temp file: ' + tmpobj.name);
-            fs.writeFileSync(tmpobj.name, css)
-            return tmpobj.name
+            return cssStrings.join('');
         });
     });
 }
 
-function processCss(url, cssfilepath) {
+function processCss(url, csscontents) {
     penthouse.DEBUG = true;
     return new Promise(function(resolve, reject){
         console.log('Start Processing');
         penthouse({
             url: url,
-            css: cssfilepath,
-            strict: true
+            csscontents: csscontents,
+            strict: true,
+            renderWaitTime: 2000
         }, function(err, criticalCss) {
             if (err) {
                 console.log('error:' + err)
@@ -66,10 +61,10 @@ function processCss(url, cssfilepath) {
     })
 }
 
-module.exports = function getCriticalCssFromUrl(url) {
+module.exports = function getCriticalCssFromSite(url) {
     return readCssSources(url)
-    .then(function(cssfilepath){
-        return processCss(url, cssfilepath);
+    .then(function(csscontents){
+        return processCss(url, csscontents);
     })
     .then(function(criticalCss){
         return new CssMinifier().minify(criticalCss).styles;

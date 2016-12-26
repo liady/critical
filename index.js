@@ -12,4 +12,3 @@ getCriticalCss(url).then(function(minifiedCss){
     console.log('Writing to: ' + outputfile);
     fs.writeFileSync(path.join('./', outputfile), minifiedCss);
 });
-
