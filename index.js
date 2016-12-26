@@ -4,7 +4,7 @@ var path = require('path')
 var fs = require('fs')
 var args = process.argv
 var url = args[2]
-var outputfile = args[3] || 'out.css';
+var outputfile = args[3] || 'critical.css';
 var getCriticalCss = require('./src/getCriticalCss.js');
 
 console.log('Extracting CSS from: ' + url);
