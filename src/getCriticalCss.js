@@ -7,9 +7,7 @@ var urlResolver = require('url')
 var CssMinifier = require('clean-css');
 
 function getText(url) {
-    return fetch(url).then(function(res) {
-        return res.text();
-    });
+    return fetch(url).then(res => res.text());
 }
 
 function readCssSources(url, callback) {
@@ -34,13 +32,11 @@ function readCssSources(url, callback) {
             }
         });
 
-        return Promise.all(cssStringPromises).then(function(cssStrings) {
-            return cssStrings.join('');
-        });
+        return Promise.all(cssStringPromises).then(cssStrings => cssStrings.join(''));
     });
 }
 
-function processCss(url, csscontents) {
+function processCss(url, csscontents, phantomLocation) {
     penthouse.DEBUG = true;
     return new Promise(function(resolve, reject){
         console.log('Start Processing');
@@ -48,7 +44,8 @@ function processCss(url, csscontents) {
             url: url,
             csscontents: csscontents,
             strict: true,
-            renderWaitTime: 2000
+            renderWaitTime: 2000,
+            phantomLocation: phantomLocation
         }, function(err, criticalCss) {
             if (err) {
                 console.log('error:' + err)
@@ -61,14 +58,10 @@ function processCss(url, csscontents) {
     })
 }
 
-module.exports = function getCriticalCssFromSite(url) {
+module.exports = function getCriticalCssFromSite(url, phantomLocation) {
     return readCssSources(url)
-    .then(function(csscontents){
-        return processCss(url, csscontents);
-    })
-    .then(function(criticalCss){
-        return new CssMinifier().minify(criticalCss).styles;
-    })
+    .then(csscontents => processCss(url, csscontents, phantomLocation))
+    .then(criticalCss => new CssMinifier().minify(criticalCss).styles)
     .catch(function(e){
         console.log(e);
         throw e
