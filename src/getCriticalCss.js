@@ -44,7 +44,7 @@ function processCss(url, csscontents, phantomLocation) {
             url: url,
             csscontents: csscontents,
             strict: true,
-            renderWaitTime: 2000,
+            renderWaitTime: process.env.RENDER_WAIT_TIME || 2000,
             phantomLocation: phantomLocation
         }, function(err, criticalCss) {
             if (err) {
