@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "critical": "node cli.js",
-    "build": "rm -f critical-css.zip && node zip",
+    "build": "rm -f critical-css.zip && zip -r critical.zip *",
     "lint": "jshint .",
     "test": "npm run lint && mocha --compilers js:babel-core/register test/core-tests.js",
     "test-all": "npm run lint && mocha --compilers js:babel-core/register"

@@ -1,4 +1,6 @@
-# Critical CSS finder
+Critical CSS Finder
+===================
+> Extract critical css in your site. Based heavily on [penthouse](https://github.com/pocketjoso/penthouse).
 
 # Installation
 ```
