@@ -9,8 +9,11 @@ function isAWSHosted() {
 exports.handler = function(event, context, callback) {
     var url = event.url;
     // var phantomjsLocation = isAWSHosted() ? phantomJsInstaller.install(true) : Promise.resolve();
-    getCriticalCss(url).then(criticalCss => {
-        console.log('criticalCss')
+    var options = {
+      useFFRemoverFix: event.useFFRemoverFix,
+      renderWaitTime: event.renderWaitTime,
+    }
+    getCriticalCss(url, options).then(criticalCss => {
         callback(null, {
           statusCode: 200,
           headers: { "Content-Type": "application/json" },
