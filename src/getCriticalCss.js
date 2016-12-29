@@ -37,7 +37,7 @@ function readCssSources(url, callback) {
 }
 
 function processCss(url, csscontents, options) {
-    penthouse.DEBUG = true;
+    penthouse.DEBUG = isTrue(options.debug) || isTrue(process.env.DEBUG)
     var options = options || {};
     return new Promise(function(resolve, reject){
         console.log('Start Processing');
@@ -45,9 +45,10 @@ function processCss(url, csscontents, options) {
             url: url,
             csscontents: csscontents,
             strict: true,
-            renderWaitTime: options.renderWaitTime ? parseInt(options.renderWaitTime) : 100,
+            renderWaitTime: options.renderWaitTime ? parseInt(options.renderWaitTime) : 300,
             phantomLocation: options.phantomLocation,
-            useFFRemoverFix: options.useFFRemoverFix === undefined ? true : (options.useFFRemoverFix == "true" || options.useFFRemoverFix == true)
+            useFFRemoverFix: options.useFFRemoverFix == undefined ? true : isTrue(options.useFFRemoverFix),
+            skipFFRemove: isTrue(options.skipFFRemove)
         }, function(err, criticalCss) {
             if (err) {
                 console.log('error:' + err)
@@ -58,6 +59,10 @@ function processCss(url, csscontents, options) {
             resolve(criticalCss);
         });
     })
+}
+
+function isTrue(exp) {
+    return !!exp && (('' + exp).toLowerCase() == 'true');
 }
 
 module.exports = function getCriticalCssFromSite(url, options) {

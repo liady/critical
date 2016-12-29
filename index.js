@@ -12,6 +12,8 @@ exports.handler = function(event, context, callback) {
     var options = {
       useFFRemoverFix: event.useFFRemoverFix,
       renderWaitTime: event.renderWaitTime,
+      skipFFRemove: event.skipFFRemove,
+      debug: event.debug
     }
     getCriticalCss(url, options).then(criticalCss => {
         callback(null, {
