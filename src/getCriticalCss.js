@@ -10,8 +10,9 @@ function getText(url) {
     return fetch(url).then(res => res.text());
 }
 
-function readCssSources(url, callback) {
+function readCssSources(url, options) {
     var parsedUrl = url.split('?')[0];
+    var log = (isTrue(options.debug) || isTrue(process.env.DEBUG)) ? console.log.bind(console) : () => {}
     return getText(url).then(function(html) {
         var $ = cheerio.load(html);
         var cssStringPromises = [];
@@ -22,12 +23,12 @@ function readCssSources(url, callback) {
                 var res = $el.attr('href');
                 var linkHref = urlResolver.resolve(url, res);
                 if(!hrefs[linkHref]) {
-                    console.log('Found Link: ' + linkHref)
+                    log('Found Link: ' + linkHref)
                     hrefs[linkHref] = true;
                     cssStringPromises.push(getText(linkHref));
                 }
             } else if($el.text()) {
-                console.log('Found Style Element: ' + $el.attr('id'))
+                log('Found Style Element: ' + $el.attr('id'))
                 cssStringPromises.push(Promise.resolve($el.text()));
             }
         });
@@ -37,10 +38,11 @@ function readCssSources(url, callback) {
 }
 
 function processCss(url, csscontents, options) {
+    var log = (isTrue(options.debug) || isTrue(process.env.DEBUG)) ? console.log.bind(console) : () => {}
     penthouse.DEBUG = isTrue(options.debug) || isTrue(process.env.DEBUG)
     var options = options || {};
     return new Promise(function(resolve, reject){
-        console.log('Start Processing');
+        log('Start Processing');
         penthouse({
             url: url,
             csscontents: csscontents,
@@ -51,7 +53,7 @@ function processCss(url, csscontents, options) {
             skipFFRemove: isTrue(options.skipFFRemove)
         }, function(err, criticalCss) {
             if (err) {
-                console.log('error:' + err)
+                log('error:' + err)
                 // handle error
                 reject(err);
             }
@@ -66,7 +68,7 @@ function isTrue(exp) {
 }
 
 module.exports = function getCriticalCssFromSite(url, options) {
-    return readCssSources(url)
+    return readCssSources(url, options)
     .then(csscontents => processCss(url, csscontents, options))
     .then(criticalCss => new CssMinifier().minify(criticalCss).styles)
     .catch(function(e){
