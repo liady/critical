@@ -13,5 +13,5 @@ app.handler({url: url, debug: true}, null, function(err, res){
         throw err
     }
     console.log('Writing to: ' + outputfile);
-    fs.writeFileSync(path.join('./', outputfile), JSON.parse(res.body).value);
+    fs.writeFileSync(path.join('./', outputfile), res.value);
 });

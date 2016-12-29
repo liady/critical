@@ -6,7 +6,7 @@ app.handler({url: url, debug: true}, null, function(err, res){
     if(err) {
         throw err
     }
-    var result = JSON.parse(res.body).value;
+    var result = res.value;
     result = result.replace('#iefix&v=6','').replace('#fontawesomeregular?v=6','')
     result = result.replace('#iefix-ss0txf','').replace('#dm-font','')
     result = result.replace('../icons','/_dm/s/rt/dist/icons')

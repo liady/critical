@@ -16,11 +16,7 @@ exports.handler = function(event, context, callback) {
       debug: event.debug
     }
     getCriticalCss(url, options).then(criticalCss => {
-        callback(null, {
-          statusCode: 200,
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({value: criticalCss})
-        });
+        callback(null, {value: criticalCss});
     }).catch(err => {
         callback(err)
     })
