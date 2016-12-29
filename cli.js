@@ -8,7 +8,7 @@ var outputfile = args[3] || 'critical.css';
 var app = require('./index.js');
 
 console.log('Extracting CSS from: ' + url);
-app.handler({url: url, debug: true, skipFFRemove: true}, null, function(err, res){
+app.handler({url: url, debug: true}, null, function(err, res){
     if(err) {
         throw err
     }
