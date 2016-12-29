@@ -57,7 +57,7 @@ function processCss(url, csscontents, options) {
                 // handle error
                 reject(err);
             }
-            console.log('End Processing');
+            log('End Processing');
             resolve(criticalCss);
         });
     })
