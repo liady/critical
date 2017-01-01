@@ -1,6 +1,4 @@
 var getCriticalCss = require('./src/getCriticalCss.js');
-var PhantomJSInstaller = require('./phantomInstaller.js');
-var phantomJsInstaller = new PhantomJSInstaller();
 
 function isAWSHosted() {
     const functionName = process.env.AWS_LAMBDA_FUNCTION_NAME || undefined;
@@ -8,7 +6,6 @@ function isAWSHosted() {
 }
 exports.handler = function(event, context, callback) {
     var url = event.url;
-    // var phantomjsLocation = isAWSHosted() ? phantomJsInstaller.install(true) : Promise.resolve();
     var options = {
       useFFRemoverFix: event.useFFRemoverFix,
       renderWaitTime: event.renderWaitTime,
