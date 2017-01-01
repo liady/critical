@@ -7,8 +7,22 @@ Critical CSS Finder
 npm install --production
 ```
 
-# Usage
+# Build for Lambda
+In an AWS linux console, run
+```
+npm install --production
+npm run build
+```
+Upload the resulting `critical.zip` to lambda.
+
+# CLI Usage
 ```
 npm run critical <url>
 ```
 You can pass a second argument for the output file name (defaults to `critical.css`)
+
+# Test vs baseline
+run:
+```
+node tester.js
+```
