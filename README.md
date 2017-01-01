@@ -1,4 +1,4 @@
-Critical CSS Finder
+AWS Lambda Critical CSS Finder
 ===================
 > Extract critical css in your site. Based heavily on [penthouse](https://github.com/pocketjoso/penthouse).
 
@@ -13,7 +13,7 @@ In an AWS linux console, run
 npm install --production
 npm run build
 ```
-Upload the resulting `critical.zip` to lambda.
+Upload the resulting `critical.zip` to lambda
 
 # CLI Usage
 ```
