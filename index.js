@@ -6,12 +6,7 @@ function isAWSHosted() {
 }
 exports.handler = function(event, context, callback) {
     var url = event.url;
-    var options = {
-      useFFRemoverFix: event.useFFRemoverFix,
-      renderWaitTime: event.renderWaitTime,
-      skipFFRemove: event.skipFFRemove,
-      debug: event.debug
-    }
+    var options = event; // we can omit unwanted keys here
     getCriticalCss(url, options).then(criticalCss => {
         callback(null, {value: criticalCss});
     }).catch(err => {

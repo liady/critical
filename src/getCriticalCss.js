@@ -47,10 +47,15 @@ function processCss(url, csscontents, options) {
             url: url,
             csscontents: csscontents,
             strict: true,
-            renderWaitTime: options.renderWaitTime ? parseInt(options.renderWaitTime) : 300,
+            renderWaitTime: asNumber(options.renderWaitTime, 300),
+            timeout: asNumber(options.timeout),
+            width: asNumber(options.width),
+            height: asNumber(options.height),
             phantomLocation: options.phantomLocation,
-            useFFRemoverFix: options.useFFRemoverFix == undefined ? true : isTrue(options.useFFRemoverFix),
-            skipFFRemove: isTrue(options.skipFFRemove)
+            useFFRemoverFix: true,
+            skipFFRemove: isTrue(options.skipFFRemove),
+            forceInclude: options.forceInclude || [],
+
         }, function(err, criticalCss) {
             if (err) {
                 log('error:' + err)
@@ -65,6 +70,10 @@ function processCss(url, csscontents, options) {
 
 function isTrue(exp) {
     return !!exp && (('' + exp).toLowerCase() == 'true');
+}
+
+function asNumber(exp, defaultValue) {
+    return exp ? parseInt(exp) : defaultValue;
 }
 
 module.exports = function getCriticalCssFromSite(url, options) {

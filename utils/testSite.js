@@ -1,4 +1,4 @@
-var app = require('./index.js');
+var app = require('../index.js');
 var url = 'http://amir.reseller-pagespeed-mb.d1test.biz/contact?preview=true'
 var expected = require('fs').readFileSync('./utils/baseline.css');
 

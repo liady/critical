@@ -24,5 +24,5 @@ You can pass a second argument for the output file name (defaults to `critical.c
 # Test vs baseline
 run:
 ```
-node tester.js
+node utils/testSite.js
 ```
