@@ -7,8 +7,10 @@
     "critical": "node cli.js",
     "build": "rm -f critical.zip && zip -r critical.zip *",
     "lint": "jshint .",
-    "test": "npm run lint && mocha --compilers js:babel-core/register test/core-tests.js",
-    "test-all": "npm run lint && mocha --compilers js:babel-core/register"
+    "test": "mocha --compilers js:babel-core/register test/core-tests.js",
+    "test-lint": "npm run lint && mocha --compilers js:babel-core/register test/core-tests.js",
+    "test-all": "mocha --compilers js:babel-core/register",
+    "test-all-lint": "npm run lint && mocha --compilers js:babel-core/register"
   },
   "author": "",
   "license": "MIT",
