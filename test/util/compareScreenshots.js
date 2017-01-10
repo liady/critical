@@ -1,6 +1,6 @@
 'use strict'
 
-var gm = require('gm').subClass({ imageMagick: true });
+import gm from 'gm'
 
 // intention: identical
 const TOLERANCE_THRESHOLD_GOOD = 0.0001
