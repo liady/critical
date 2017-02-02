@@ -8,10 +8,22 @@ var outputfile = args[3] || 'critical.css';
 var app = require('./index.js');
 
 console.log('Extracting CSS from: ' + url);
-app.handler({url: url, debug: true}, null, function(err, res){
-    if(err) {
-        throw err
-    }
-    console.log('Writing to: ' + outputfile);
-    fs.writeFileSync(path.join('./', outputfile), res.value);
-});
+critical(true).catch(function(err) {
+    console.log('Error: ' + err);
+    console.log();
+    console.log('Retry extracting CSS from: ' + url);
+    critical(false)
+})
+
+function critical(strict) {
+    return new Promise(function(resolve, reject) {
+        app.handler({url: url, debug: true, timeout: 100000, strict: strict}, null, function(err, res){
+            if(err) {
+                reject(err)
+            }
+            console.log('Writing to: ' + outputfile);
+            fs.writeFileSync(path.join('./', outputfile), res.value);
+            resolve(outputfile);
+        });
+    })
+}

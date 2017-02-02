@@ -10,6 +10,6 @@ exports.handler = function(event, context, callback) {
     getCriticalCss(url, options).then(criticalCss => {
         callback(null, {value: criticalCss});
     }).catch(err => {
-        callback(err)
+        callback(err, {err: err})
     })
 }

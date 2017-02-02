@@ -46,7 +46,7 @@ function processCss(url, csscontents, options) {
         penthouse({
             url: url,
             csscontents: csscontents,
-            strict: true,
+            strict: booleanValue(options.strict, true),
             renderWaitTime: asNumber(options.renderWaitTime, 300),
             timeout: asNumber(options.timeout),
             width: asNumber(options.width),
@@ -72,12 +72,26 @@ function isTrue(exp) {
     return !!exp && (('' + exp).toLowerCase() == 'true');
 }
 
+function booleanValue(exp, defaultValue) {
+    if(typeof exp === 'undefined') {
+        return defaultValue;
+    } else {
+        if(!exp || (('' + exp).toLowerCase() == 'false')) {
+            return false;
+        } else if((('' + exp).toLowerCase() == 'true')) {
+            return true;
+        }
+        return defaultValue;
+    }
+}
+
 function asNumber(exp, defaultValue) {
     return exp ? parseInt(exp) : defaultValue;
 }
 
 module.exports = function getCriticalCssFromSite(url, options) {
     return readCssSources(url, options)
+    .then(rawcontents => new CssMinifier({restructuring: false}).minify(rawcontents).styles)
     .then(csscontents => processCss(url, csscontents, options))
     .then(criticalCss => new CssMinifier().minify(criticalCss).styles)
     .catch(function(e){

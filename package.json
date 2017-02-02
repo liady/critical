@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "critical": "node cli.js",
+    "critical:debug": "node-debug cli.js",
     "build": "rm -f critical.zip && zip -r critical.zip *",
     "lint": "jshint .",
     "test": "mocha --compilers js:babel-core/register test/core-tests.js",
@@ -18,15 +19,15 @@
   "dependencies": {
     "apartment": "^1.1.1",
     "cheerio": "^0.22.0",
-    "clean-css": "^3.4.23",
+    "clean-css": "^3.4.24",
     "css": "https://github.com/pocketjoso/css.git",
     "css-mediaquery": "^0.1.2",
     "jsesc": "^1.0.0",
     "node-fetch": "^1.6.3",
     "os-tmpdir": "^1.0.1",
     "phantomjs-prebuilt": "^2.1.3",
-    "tmp": "0.0.28",
-    "request": "^2.74.0"
+    "request": "^2.74.0",
+    "tmp": "0.0.28"
   },
   "devDependencies": {
     "babel-core": "^6.8.0",
