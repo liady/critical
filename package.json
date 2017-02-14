@@ -6,7 +6,7 @@
   "scripts": {
     "critical": "node cli.js",
     "critical:debug": "node-debug cli.js",
-    "build": "rm -rf dist && zip -r dist/critical.$npm_package_version.zip *",
+    "build": "rm -f critical.*.zip && zip -r critical.$npm_package_version.zip *",
     "lint": "jshint .",
     "test": "mocha --compilers js:babel-core/register test/core-tests.js",
     "test-lint": "npm run lint && mocha --compilers js:babel-core/register test/core-tests.js",
