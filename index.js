@@ -5,7 +5,7 @@ function isAWSHosted() {
     return functionName !== undefined;
 }
 exports.handler = function(event, context, callback) {
-    var url = event.url;
+    var url = encodeURI(event.url);
     var options = event; // we can omit unwanted keys here
     getCriticalCss(url, options).then(criticalCss => {
         callback(null, {value: criticalCss});
