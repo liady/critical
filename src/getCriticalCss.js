@@ -56,7 +56,8 @@ function processCss(url, csscontents, options) {
             skipFFRemove: isTrue(options.skipFFRemove),
             forceInclude: options.forceInclude || [],
             clearTemp: booleanValue(options.clearTemp, true),
-            compress: booleanValue(options.compress, false)
+            compress: booleanValue(options.compress, false),
+            singleFile: booleanValue(options.singleFile, true)
 
         }, function(err, criticalCss) {
             if (err) {

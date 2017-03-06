@@ -17,7 +17,7 @@ critical(true).catch(function(err) {
 
 function critical(strict) {
     return new Promise(function(resolve, reject) {
-        app.handler({url: url, debug: true, timeout: 100000, strict: strict, clearTemp: true}, null, function(err, res){
+        app.handler({url: url, debug: true, timeout: 100000, strict: strict, clearTemp: true, singleFile: false}, null, function(err, res){
             if(err) {
                 reject(err)
             }
