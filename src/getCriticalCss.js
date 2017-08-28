@@ -57,8 +57,8 @@ function processCss(url, csscontents, options) {
             forceInclude: options.forceInclude || [],
             clearTemp: booleanValue(options.clearTemp, true),
             compress: booleanValue(options.compress, false),
-            singleFile: booleanValue(options.singleFile, true)
-
+            singleFile: booleanValue(options.singleFile, true),
+            userAgent: strValue(options.userAgent)
         }, function(err, criticalCss) {
             if (err) {
                 log('error:' + err)
@@ -85,6 +85,17 @@ function booleanValue(exp, defaultValue) {
             return true;
         }
         return defaultValue;
+    }
+}
+
+strValue(exp) {
+    if(!exp || exp === 'undefined' || exp === 'null') {
+        return undefined
+    }
+    try {
+        return JSON.parse(exp)
+    } catch (err) {
+        return exp;
     }
 }
 
