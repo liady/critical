@@ -88,7 +88,7 @@ function booleanValue(exp, defaultValue) {
     }
 }
 
-strValue(exp) {
+function strValue(exp) {
     if(!exp || exp === 'undefined' || exp === 'null') {
         return undefined
     }
